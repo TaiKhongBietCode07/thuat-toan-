@@ -1,0 +1,24 @@
+int solve (int a[][100], int ai,int aj, int bi, int bj,int n, int m) {
+    queue<pair<pair<int, int> ,int>> q;
+    map<pair<int, int>, int > mp;
+    q.push({{ai, aj}, 0});
+    mp[q.front().first]++;
+    int dx[4] = {-1, 0 , 1, 0};
+    int dy[4] = {0, -1, 0 , 1};
+    while(!q.empty()) {
+        auto top = q.front(); q.pop();
+        int x = top.first.first;
+        int y = top.first.second;
+        int step = top.second;
+        if(x == bi && y == bj) return step;
+        for (int i = 0; i < 4; ++i) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if(nx >= 0 && ny >= 0 && nx < n && ny < m && a[nx][ny] == 1 && mp.find({nx, ny}) == mp.end()) {
+                q.push({{nx, ny}, step + 1});
+                mp[{nx, ny}]++;
+        }
+        }
+}
+return -1;
+}
